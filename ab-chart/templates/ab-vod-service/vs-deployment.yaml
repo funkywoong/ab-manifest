@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.abVodService.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.service.abVodService.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.service.abVodService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.abVodService.name }}
+    spec:
+      containers:
+      - name: {{ .Values.service.abVodService.name }}
+        image: {{ .Values.image.baseRepositoryUrl }}{{ .Values.service.abVodService.name }}{{ .Values.service.abVodService.deployment.imageVersion }}
+        ports:
+        - containerPort: {{ .Values.service.abVodService.ports.containerPort }}

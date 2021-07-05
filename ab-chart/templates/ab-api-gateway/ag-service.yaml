@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.abApiGateway.name }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    app.kubernetes.io/managed-by: {{ .Values.release.managedBy }}
+    meta.helm.sh/release-name: {{ .Values.release.name }}
+    meta.helm.sh/release-namespace: {{ .Values.release.namespace }}
+    alb.ingress.kubernetes.io/healthcheck-path: {{ .Values.service.healthCheckPath }}
+spec:
+  selector:
+    app: {{ .Values.service.abApiGateway.name }}
+  ports:
+    - protocol: {{ .Values.service.abApiGateway.ports.protocol }}
+      port: {{ .Values.service.abApiGateway.ports.port }}
+      targetPort: {{ .Values.service.abApiGateway.ports.targetPort }}
+  type: {{ .Values.service.type }}

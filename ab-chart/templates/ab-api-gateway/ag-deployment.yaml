@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.abApiGateway.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.service.abApiGateway.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.service.abApiGateway.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.abApiGateway.name }}
+    spec:
+      containers:
+      - name: {{ .Values.service.abApiGateway.name }}
+        image: {{ .Values.image.baseRepositoryUrl }}{{ .Values.service.abApiGateway.name }}{{ .Values.service.abApiGateway.deployment.imageVersion }}
+        ports:
+        - containerPort: {{ .Values.service.abApiGateway.ports.containerPort }}

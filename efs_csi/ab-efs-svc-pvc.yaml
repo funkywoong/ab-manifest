@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ab-efs-svc-pvc
+  namespace: dev
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ab-efs-svc-sc
+  resources:
+    requests:
+      storage: 5Gi

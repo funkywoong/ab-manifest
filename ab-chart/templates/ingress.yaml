@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ab-dev-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: alb
+    app.khelmubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: ab-dev
+    meta.helm.sh/release-namespace: default
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: 	arn:aws:acm:us-east-1:353380520333:certificate/22ec1d17-94b4-4cab-aef0-9bae8dc3c50c
+    alb.ingress.kubernetes.io/target-type: ip
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            pathType: Prefix
+            backend:
+              service:
+                name: ab-api-gateway
+                port:
+                  number: 3000
