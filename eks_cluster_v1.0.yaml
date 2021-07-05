@@ -1,0 +1,24 @@
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  version: "1.19"
+  name: ab-msa
+  region: us-east-1
+
+managedNodeGroups:
+  - name: worker-ng-2
+    labels: { role: workers }
+    instanceType: m5.large
+    desiredCapacity: 3
+    minSize: 1
+    maxSize: 6
+    volumeSize: 20
+    privateNetworking: true
+    ssh:
+      publicKeyName: 'ab-east-2-key'
+    tags:
+      'kubernetes.io/cluster/ab-msa': 'owned'
+      'env': 'dev'
+    
