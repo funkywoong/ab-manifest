@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Effect": "Allow",
+    "Principal": {
+      "Federated": "arn:aws:iam::353380520333:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0C6FBF721022321AD6CDF4AE291F3DDB"
+    },
+    "Action": "sts:AssumeRoleWithWebIdentity",
+    "Condition": {
+      "StringEquals": {
+        "oidc.eks.us-east-1.amazonaws.com/id/0C6FBF721022321AD6CDF4AE291F3DDB:sub": "system:serviceaccount:grafana:iamproxy-service-account"
+      }
+    }
+  },
+  {
+    "Effect": "Allow",
+    "Principal": {
+      "Federated": "arn:aws:iam::353380520333:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0C6FBF721022321AD6CDF4AE291F3DDB"
+    },
+    "Action": "sts:AssumeRoleWithWebIdentity",
+    "Condition": {
+      "StringEquals": {
+        "oidc.eks.us-east-1.amazonaws.com/id/0C6FBF721022321AD6CDF4AE291F3DDB:sub": "system:serviceaccount:prometheus:iamproxy-service-account"
+      }
+    }
+  }
+]
+}

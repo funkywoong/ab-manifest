@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.abEfsService.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.service.abEfsService.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.service.abEfsService.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.abEfsService.name }}
+    spec:
+      containers:
+      - name: {{ .Values.service.abEfsService.name }}
+        image: {{ .Values.image.baseRepositoryUrl }}{{ .Values.service.abEfsService.name }}{{ .Values.service.abEfsService.deployment.imageVersion }}
+        ports:
+        - containerPort: {{ .Values.service.abEfsService.ports.containerPort }}
+        volumeMounts:
+        - name: {{ .Values.service.abEfsService.volumeMount.name }}
+          mountPath: {{ .Values.service.abEfsService.volumeMount.mountPath }}
+      volumes:
+      - name: {{ .Values.service.abEfsService.volumes.name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.service.abEfsService.volumes.persistentVolumeClaim.claimName }}
