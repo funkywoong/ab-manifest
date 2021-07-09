@@ -1,0 +1,13 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.autoscaling.abEfsService.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.service.abEfsService.name }}
+  minReplicas: {{ .Values.autoscaling.abEfsService.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.abEfsService.maxReplicas }}
+  targetCPUUtilizationPercentage: {{ .Values.autoscaling.abEfsService.targetCPUUtilizationPercentage }}

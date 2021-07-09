@@ -16,8 +16,28 @@ spec:
       containers:
       - name: {{ .Values.service.abEfsService.name }}
         image: {{ .Values.image.baseRepositoryUrl }}{{ .Values.service.abEfsService.name }}{{ .Values.service.abEfsService.deployment.imageVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            cpu: {{ .Values.resource.requests.cpu }}
+            memory: {{ .Values.resource.requests.memory }}
+          limits:
+            cpu: {{ .Values.resource.limits.cpu }}
+            memory: {{ .Values.resource.limits.memory }}
         ports:
         - containerPort: {{ .Values.service.abEfsService.ports.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.service.livenessProbe.httpGet.path }}
+            port: {{ .Values.service.abEfsService.ports.containerPort }}
+          initialDelaySeconds: {{ .Values.service.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.service.livenessProbe.periodSeconds }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.service.readinessProbe.httpGet.path }}
+            port: {{ .Values.service.abEfsService.ports.containerPort }}
+          initialDelaySeconds: {{ .Values.service.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.service.readinessProbe.periodSeconds }}
         volumeMounts:
         - name: {{ .Values.service.abEfsService.volumeMount.name }}
           mountPath: {{ .Values.service.abEfsService.volumeMount.mountPath }}

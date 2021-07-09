@@ -16,5 +16,25 @@ spec:
       containers:
       - name: {{ .Values.service.abApiGateway.name }}
         image: {{ .Values.image.baseRepositoryUrl }}{{ .Values.service.abApiGateway.name }}{{ .Values.service.abApiGateway.deployment.imageVersion }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            cpu: {{ .Values.resource.requests.cpu }}
+            memory: {{ .Values.resource.requests.memory }}
+          limits:
+            cpu: {{ .Values.resource.limits.cpu }}
+            memory: {{ .Values.resource.limits.memory }}
         ports:
         - containerPort: {{ .Values.service.abApiGateway.ports.containerPort }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.service.livenessProbe.httpGet.path }}
+            port: {{ .Values.service.abApiGateway.ports.containerPort }}
+          initialDelaySeconds: {{ .Values.service.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.service.livenessProbe.periodSeconds }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.service.readinessProbe.httpGet.path }}
+            port: {{ .Values.service.abApiGateway.ports.containerPort }}
+          initialDelaySeconds: {{ .Values.service.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.service.readinessProbe.periodSeconds }}
