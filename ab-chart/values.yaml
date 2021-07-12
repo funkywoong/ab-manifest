@@ -32,7 +32,7 @@ service:
     name: ab-api-gateway
     deployment:
       imageVersion: ":v0.1.5"
-      replicas: 3
+      replicas: 1
     ports:
       port: 3000
       targetPort: 3000
@@ -42,7 +42,7 @@ service:
     name: ab-vod-service
     deployment:
       imageVersion: ":v0.1.2"
-      replicas: 3
+      replicas: 1
     ports:
       port: 3001
       targetPort: 3001
@@ -52,7 +52,7 @@ service:
     name: ab-efs-service
     deployment:
       imageVersion: ":v0.1.2"
-      replicas: 3
+      replicas: 1
     ports:
       port: 3002
       targetPort: 3002
